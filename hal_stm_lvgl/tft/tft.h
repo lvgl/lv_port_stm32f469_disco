@@ -10,14 +10,13 @@
  *      INCLUDES
  *********************/
 #include <stdint.h>
-#include "lvgl/lv_misc/lv_color.h"
-#include "lvgl/lv_misc/lv_area.h"
+#include "lvgl/lvgl.h"
 
 /*********************
  *      DEFINES
  *********************/
-#define TFT_HOR_RES LV_HOR_RES
-#define TFT_VER_RES LV_VER_RES
+#define TFT_HOR_RES 800
+#define TFT_VER_RES 480
 
 #define TFT_EXT_FB		1		/*Frame buffer is located into an external SDRAM*/
 #define TFT_USE_GPU		1		/*Enable hardware accelerator*/
