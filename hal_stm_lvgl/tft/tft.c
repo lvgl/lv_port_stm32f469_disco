@@ -8,8 +8,7 @@
  *********************/
 #include "tft.h"
 #include "lv_conf.h"
-#include "lvgl/lv_core/lv_vdb.h"
-#include "lvgl/lv_hal/lv_hal.h"
+#include "lvgl/src/lv_hal/lv_hal.h"
 
 #include <string.h>
 
@@ -46,7 +45,7 @@ static DSI_VidCfgTypeDef hdsivideo_handle;
  **********************/
 
 /*These 3 functions are needed by LittlevGL*/
-static void tft_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color_p)
+static void tft_flush(lv_disp_drv_t * drv, const lv_area_t * area, lv_color_t * color_p);
 #if TFT_USE_GPU != 0
 static void gpu_mem_blend(lv_disp_drv_t * drv, lv_color_t * dest, const lv_color_t * src, uint32_t length, lv_opa_t opa);
 static void gpu_mem_fill(lv_disp_drv_t * disp_drv, lv_color_t * dest_buf, lv_coord_t dest_width,
@@ -96,6 +95,7 @@ static uint16_t my_fb[TFT_HOR_RES * TFT_VER_RES];
 
 
 DMA_HandleTypeDef     DmaHandle;
+static lv_disp_drv_t disp_drv;
 static int32_t x1_flush;
 static int32_t y1_flush;
 static int32_t x2_flush;
@@ -116,7 +116,10 @@ static const lv_color_t * buf_to_flush;
  */
 void tft_init(void)
 {
-	lv_disp_drv_t disp_drv;
+	static lv_color_t disp_buf1[TFT_HOR_RES * 30];
+	static lv_disp_buf_t buf;
+	lv_disp_buf_init(&buf, disp_buf1, NULL, TFT_HOR_RES * 30);
+
 	lv_disp_drv_init(&disp_drv);
 
 #if TFT_EXT_FB != 0
@@ -125,13 +128,12 @@ void tft_init(void)
 	LCD_Config();
 	DMA_Config();
 
-	disp_drv.disp_fill = tft_fill;
-	disp_drv.disp_map = tft_map;
-	disp_drv.disp_flush = tft_flush;
+	disp_drv.buffer = &buf;
+	disp_drv.flush_cb = tft_flush;
 #if TFT_USE_GPU != 0
 	DMA2D_Config();
-	disp_drv.mem_blend = gpu_mem_blend;
-	disp_drv.mem_fill = gpu_mem_fill;
+	disp_drv.gpu_blend_cb = gpu_mem_blend;
+	disp_drv.gpu_fill_cb = gpu_mem_fill;
 #endif
 	lv_disp_drv_register(&disp_drv);
 }
@@ -302,8 +304,12 @@ static void LCD_Config(void)
 
 	/* Timing parameters for all Video modes
 	*/
-	uint32_t lcd_x_size = OTM8009A_480X800_WIDTH;  /* 480 */
-	uint32_t lcd_y_size = OTM8009A_480X800_HEIGHT; /* 800 */
+	// portrait
+//	uint32_t lcd_x_size = OTM8009A_480X800_WIDTH;  /* 480 */
+//	uint32_t lcd_y_size = OTM8009A_480X800_HEIGHT; /* 800 */
+	// landscape
+	uint32_t lcd_x_size = OTM8009A_800X480_WIDTH;  /* 800 */
+	uint32_t lcd_y_size = OTM8009A_800X480_HEIGHT; /* 480 */
 
 	HACT = lcd_x_size;
 	VACT = lcd_y_size;
@@ -416,7 +422,7 @@ static void LCD_Config(void)
 	/* Initialize the OTM8009A LCD Display IC Driver (KoD LCD IC Driver)
 	*  depending on configuration set in 'hdsivideo_handle'.
 	*/
-	OTM8009A_Init(OTM8009A_FORMAT_RBG565, LCD_ORIENTATION_PORTRAIT);
+	OTM8009A_Init(OTM8009A_FORMAT_RBG565, LCD_ORIENTATION_LANDSCAPE);
 
 	/***********************End OTM8009A Initialization****************************/
 	/************************* Layer Configuration ********************************/
@@ -935,7 +941,7 @@ static void DMA_TransferComplete(DMA_HandleTypeDef *han)
 	y_fill_act ++;
 
 	if(y_fill_act > y2_fill) {
-		  lv_flush_ready();
+		  lv_disp_flush_ready(&disp_drv);
 	} else {
 	  buf_to_flush += x2_flush - x1_flush + 1;
 	  /*##-7- Start the DMA transfer using the interrupt mode ####################*/
