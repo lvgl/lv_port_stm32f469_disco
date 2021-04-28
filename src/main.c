@@ -16,7 +16,7 @@
 #include "hal_stm_lvgl/tft/tft.h"
 #include "hal_stm_lvgl/touchpad/touchpad.h"
 
-#include "lv_examples/lv_apps/demo/demo.h"
+#include "lv_examples/lv_examples.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -41,8 +41,9 @@ int main(void)
   tft_init();
   touchpad_init();
 
-//  demo_create();
-  benchmark_create();
+  //lv_demo_widgets();
+  //lv_demo_benchmark();
+  lv_demo_music();
 
   while (1)
   {
