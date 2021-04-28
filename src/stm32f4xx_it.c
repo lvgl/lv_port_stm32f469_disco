@@ -38,7 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_it.h"
-#include "lvgl/lv_hal/lv_hal_tick.h"
+#include "lvgl/src/lv_hal/lv_hal_tick.h"
 
 
 /** @addtogroup STM32F4xx_HAL_Examples
