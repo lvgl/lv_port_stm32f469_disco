@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>stm32f469_discovery_no_os</name>
+	<name>LVGL_STM32f469I_Disco</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -19,10 +19,64 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>com.st.stm32cube.ide.mcu.MCUProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUCubeProjectNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUCubeIdeServicesRevAev2ProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUAdvancedStructureProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCUSingleCpuProjectNature</nature>
+		<nature>com.st.stm32cube.ide.mcu.MCURootProjectNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
-		<nature>fr.ac6.mcu.ide.core.MCUProjectNature</nature>
-		<nature>fr.ac6.mcu.ide.core.MCUSingleCoreProjectNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Drivers/BSP/Components/ft6x06.c</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/Drivers/BSP/Components/ft6x06/ft6x06.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/Components/nt35510.c</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/Drivers/BSP/Components/nt35510/nt35510.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/Components/otm8009a.c</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/Drivers/BSP/Components/otm8009a/otm8009a.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/STM32469I-Discovery/stm32469i_discovery.c</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/Drivers/BSP/STM32469I-Discovery/stm32469i_discovery.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/STM32469I-Discovery/stm32469i_discovery_lcd.c</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/Drivers/BSP/STM32469I-Discovery/stm32469i_discovery_lcd.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/STM32469I-Discovery/stm32469i_discovery_ts.c</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/Drivers/BSP/STM32469I-Discovery/stm32469i_discovery_ts.c</locationURI>
+		</link>
+	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1676576590488</id>
+			<name>Drivers/BSP/Components</name>
+			<type>13</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1676576580039</id>
+			<name>Drivers/BSP/STM32469I-Discovery</name>
+			<type>13</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
